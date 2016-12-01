@@ -22,10 +22,10 @@ var canvas = document.getElementById( 'canvas' ),
 		// starting hue
 		hue = 120,
 		// when launching fireworks with a click, too many get launched at once without a limiter, one launch per 5 loop ticks
-		limiterTotal = 5,
-		limiterTick = 0,
+		limiterTotal = 20,
+		limiterTick = 10,
 		// this will time the auto launches of fireworks, one launch per 80 loop ticks
-		timerTotal = 80,
+		timerTotal = 180,
 		timerTick = 0,
 		mousedown = false,
 		// mouse x coordinate,
@@ -67,7 +67,7 @@ function Firework( sx, sy, tx, ty ) {
 	this.distanceTraveled = 0;
 	// track the past coordinates of each firework to create a trail effect, increase the coordinate count to create more prominent trails
 	this.coordinates = [];
-	this.coordinateCount = 3;
+	this.coordinateCount = 100;
 	// populate initial coordinate collection with the current coordinates
 	while( this.coordinateCount-- ) {
 		this.coordinates.push( [ this.x, this.y ] );
@@ -136,7 +136,7 @@ function Particle( x, y ) {
 	this.y = y;
 	// track the past coordinates of each particle to create a trail effect, increase the coordinate count to create more prominent trails
 	this.coordinates = [];
-	this.coordinateCount = 5;
+	this.coordinateCount = 10;
 	while( this.coordinateCount-- ) {
 		this.coordinates.push( [ this.x, this.y ] );
 	}
@@ -188,7 +188,7 @@ Particle.prototype.draw = function() {
 // create particle group/explosion
 function createParticles( x, y ) {
 	// increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
-	var particleCount = 30;
+	var particleCount = 1000;
 	while( particleCount-- ) {
 		particles.push( new Particle( x, y ) );
 	}
@@ -200,7 +200,7 @@ function loop() {
 	requestAnimFrame( loop );
 
 	// increase the hue to get different colored fireworks over time
-	hue += 0.5;
+	hue += 1;
 
 	// normally, clearRect() would be used to clear the canvas
 	// we want to create a trailing effect though
